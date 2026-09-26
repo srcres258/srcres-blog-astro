@@ -1,0 +1,193 @@
+/*
+  Minimal blog styling inspired by Bear Blog's default CSS.
+  https://github.com/HermanMartinus/bearblog/blob/master/templates/styles/blog/default.css
+*/
+
+:root {
+	color-scheme: dark;
+	--width: 720px;
+	--font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	--background-color: #01242e;
+	--heading-color: #eee;
+	--text-color: #ddd;
+	--muted-color: #aaa;
+	--link-color: #8cc2dd;
+	--border-color: rgba(238, 238, 238, 0.18);
+	--code-background: #001820;
+	--code-color: #e6edf3;
+	--selection-background: #004052;
+}
+
+html {
+	background: var(--background-color);
+}
+
+::selection {
+	background: var(--selection-background);
+	color: var(--heading-color);
+}
+
+body {
+	font-family: var(--font-main);
+	margin: 0 auto;
+	padding: 20px;
+	max-width: var(--width);
+	background: var(--background-color);
+	color: var(--text-color);
+	font-size: 18px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	margin: 24px 0 48px;
+}
+
+.site-title {
+	color: var(--heading-color);
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+nav {
+	display: flex;
+	gap: 0.85rem;
+	font-size: 0.95rem;
+}
+
+main {
+	min-height: 60vh;
+}
+
+footer {
+	margin: 56px 0 16px;
+	padding-top: 20px;
+	border-top: 1px solid var(--border-color);
+	color: var(--muted-color);
+	font-size: 0.9rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--heading-color);
+	line-height: 1.25;
+}
+
+strong,
+b {
+	color: var(--heading-color);
+}
+
+h1 {
+	font-size: 2rem;
+	margin: 0 0 0.75rem;
+}
+
+h2 {
+	font-size: 1.35rem;
+	margin-top: 2.25rem;
+}
+
+a {
+	color: var(--link-color);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.18em;
+}
+
+a:hover {
+	color: var(--heading-color);
+}
+
+p,
+ul,
+ol {
+	margin: 0 0 1.2rem;
+}
+
+ul,
+ol {
+	padding-left: 1.5rem;
+}
+
+small,
+time,
+.muted {
+	color: var(--muted-color);
+}
+
+.intro {
+	margin-bottom: 2.5rem;
+}
+
+.lede {
+	font-size: 1.08rem;
+}
+
+.post-list {
+	display: grid;
+	gap: 1.4rem;
+	margin-top: 1rem;
+}
+
+.post-preview {
+	padding-bottom: 1.25rem;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.post-preview h3 {
+	margin: 0 0 0.25rem;
+	font-size: 1.15rem;
+}
+
+.post-preview p {
+	margin: 0.45rem 0 0;
+}
+
+code {
+	font-family: var(--font-mono);
+	font-size: 0.92em;
+	padding: 2px 5px;
+	border-radius: 4px;
+	background: var(--code-background);
+	color: var(--code-color);
+}
+
+pre {
+	padding: 1rem;
+	overflow-x: auto;
+	border: 1px solid var(--border-color);
+	border-radius: 6px;
+	background: var(--code-background);
+}
+
+pre code {
+	padding: 0;
+	background: transparent;
+}
+
+@media (max-width: 520px) {
+	body {
+		padding: 16px;
+		font-size: 17px;
+	}
+
+	header {
+		display: block;
+		margin-bottom: 36px;
+	}
+
+	nav {
+		margin-top: 0.5rem;
+	}
+}
