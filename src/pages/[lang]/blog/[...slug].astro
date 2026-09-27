@@ -1,0 +1,30 @@
+---
+import BlogPost from '../../../components/BlogPost.astro';
+import { defaultLocale, localeCodes, type Locale } from '../../../i18n/config';
+import { getLocalizedPosts, type BlogPost as BlogPostEntry } from '../../../i18n/posts';
+
+export async function getStaticPaths() {
+	const perLocale = await Promise.all(
+		localeCodes
+			.filter((locale) => locale !== defaultLocale)
+			.map(async (locale) => ({ locale, posts: await getLocalizedPosts(locale) })),
+	);
+
+	return perLocale.flatMap(({ locale, posts }) =>
+		posts.map(({ slug, post }) => ({
+			params: { lang: locale, slug },
+			props: { post, slug, locale },
+		})),
+	);
+}
+
+interface Props {
+	post: BlogPostEntry;
+	slug: string;
+	locale: Locale;
+}
+
+const { post, slug, locale } = Astro.props;
+---
+
+<BlogPost post={post} locale={locale} slug={slug} />

@@ -16,4 +16,3 @@ foo
 ## Chapter 2
 
 bar
-

@@ -197,6 +197,19 @@ pre code {
 	border-radius: 999px;
 }
 
+.language-list {
+	display: flex;
+	gap: 0.85rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.language-list [aria-current='page'] {
+	color: var(--muted-color);
+	text-decoration: none;
+}
+
 @media (max-width: 520px) {
 	body {
 		padding: 16px;

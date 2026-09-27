@@ -1,40 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../layouts/Layout.astro';
-
-const title = "srcres's blog";
-const description = 'Personal notes on programming, systems, tools, and the web.';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+import BlogHome from '../components/BlogHome.astro';
+import { defaultLocale } from '../i18n/config';
 ---
 
-<Layout title={title} description={description}>
-	<section class="intro">
-		<h1>{title}</h1>
-		<p class="lede">
-			Personal notes on programming, systems, tools, and the web. This site is intentionally
-			plain: mostly text, fast static pages, and a small CSS layer inspired by Bear Blog.
-		</p>
-	</section>
-
-	<section aria-labelledby="recent-posts">
-		<h2 id="recent-posts">Recent posts</h2>
-		<div class="post-list">
-			{
-				posts.map((post) => (
-					<article class="post-preview">
-						<h3>
-							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-						</h3>
-						<time datetime={post.data.pubDate.toISOString()}>
-							{post.data.pubDate.toLocaleDateString()}
-						</time>
-						<p>{post.data.description}</p>
-					</article>
-				))
-			}
-		</div>
-	</section>
-</Layout>
+<BlogHome locale={defaultLocale} />

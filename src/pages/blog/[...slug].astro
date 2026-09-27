@@ -1,43 +1,23 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import BlogPost from '../../components/BlogPost.astro';
+import { defaultLocale } from '../../i18n/config';
+import { getLocalizedPosts, type BlogPost as BlogPostEntry } from '../../i18n/posts';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getLocalizedPosts(defaultLocale);
 
-	return posts.map((post) => ({
-		params: {
-			slug: post.id,
-		},
-		props: {
-			post,
-		},
+	return posts.map(({ slug, post }) => ({
+		params: { slug },
+		props: { post, slug },
 	}));
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+interface Props {
+	post: BlogPostEntry;
+	slug: string;
+}
+
+const { post, slug } = Astro.props;
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
-	<article class="blog-post">
-		<header>
-			<h1>{post.data.title}</h1>
-			<time datetime={post.data.pubDate.toISOString()}>
-				{post.data.pubDate.toLocaleDateString()}
-			</time>
-
-			{
-				post.data.tags.length > 0 && (
-					<ul class="tag-list">
-						{post.data.tags.map((tag) => (
-							<li>{tag}</li>
-						))}
-					</ul>
-				)
-			}
-		</header>
-
-		<Content />
-	</article>
-</Layout>
+<BlogPost post={post} locale={defaultLocale} slug={slug} />

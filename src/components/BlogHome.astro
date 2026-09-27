@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { locales, type Locale } from '../i18n/config';
+import { getLocalizedPosts } from '../i18n/posts';
+import { localeUrl, useTranslations } from '../i18n/utils';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const posts = await getLocalizedPosts(locale);
+---
+
+<Layout title="srcres's blog" description={t('site.description')} locale={locale} path="/">
+	<section class="intro">
+		<h1>srcres's blog</h1>
+		<p class="lede">{t('site.lede')}</p>
+	</section>
+
+	<section aria-labelledby="recent-posts">
+		<h2 id="recent-posts">{t('home.recentPosts')}</h2>
+		<div class="post-list">
+			{
+				posts.map(({ slug, post }) => (
+					<article class="post-preview">
+						<h3>
+							<a href={localeUrl(locale, `blog/${slug}`)}>{post.data.title}</a>
+						</h3>
+						<time datetime={post.data.pubDate.toISOString()}>
+							{post.data.pubDate.toLocaleDateString(locales[locale].htmlLang)}
+						</time>
+						<p>{post.data.description}</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+</Layout>

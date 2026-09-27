@@ -1,30 +1,100 @@
 ---
 import '../styles/global.css';
+import { defaultLocale, localeCodes, locales, type Locale } from '../i18n/config';
+import {
+	getLocaleFromUrl,
+	getPathFromUrl,
+	localeOptions,
+	localeUrl,
+	useTranslations,
+} from '../i18n/utils';
 
 interface Props {
 	title?: string;
 	description?: string;
+	/** Locale of this page. Defaults to the locale of the current URL. */
+	locale?: Locale;
+	/** Locale-relative path of this page, e.g. `/blog/hello/`. */
+	path?: string;
+	/**
+	 * Locales that actually have this page, mapped to their locale-relative
+	 * path. Defaults to the same path being available in every locale.
+	 */
+	alternates?: Partial<Record<Locale, string>>;
 }
 
-const { title = "srcres's blog", description = 'A personal technical blog.' } = Astro.props;
+const {
+	title = "srcres's blog",
+	description,
+	locale = getLocaleFromUrl(Astro.url),
+	path = getPathFromUrl(Astro.url),
+	alternates,
+} = Astro.props;
+
+const t = useTranslations(locale);
+
+// Locale-relative path per locale, used for hreflang and the language switcher.
+const pagePaths: Partial<Record<Locale, string>> = alternates ?? {};
+if (!alternates) {
+	for (const code of localeCodes) {
+		pagePaths[code] = path;
+	}
+}
+
+// Absolute URLs require `site` to be configured; without it these are omitted.
+function absoluteUrl(targetLocale: Locale, targetPath: string): string | undefined {
+	return Astro.site ? new URL(localeUrl(targetLocale, targetPath), Astro.site).href : undefined;
+}
+
+const canonicalUrl = absoluteUrl(locale, path);
+const alternateLinks = localeCodes
+	.filter((code) => pagePaths[code] !== undefined)
+	.map((code) => ({ locale: code, href: absoluteUrl(code, pagePaths[code] as string) }))
+	.filter((link): link is { locale: Locale; href: string } => link.href !== undefined);
+const xDefaultUrl =
+	pagePaths[defaultLocale] !== undefined
+		? absoluteUrl(defaultLocale, pagePaths[defaultLocale] as string)
+		: undefined;
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={locales[locale].htmlLang}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<meta name="description" content={description} />
+		<meta name="description" content={description ?? t('site.description')} />
 		<meta name="generator" content={Astro.generator} />
+		{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+		{
+			alternateLinks.map((link) => (
+				<link rel="alternate" hreflang={locales[link.locale].htmlLang} href={link.href} />
+			))
+		}
+		{xDefaultUrl && <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />}
 		<title>{title}</title>
 	</head>
 	<body>
 		<header>
-			<a class="site-title" href="/">srcres's blog</a>
-			<nav aria-label="Main navigation">
-				<a href="/">Home</a>
+			<a class="site-title" href={localeUrl(locale, '/')}>srcres's blog</a>
+			<nav aria-label={t('nav.main')}>
+				<a href={localeUrl(locale, '/')}>{t('nav.home')}</a>
+				<ul class="language-list" aria-label={t('nav.language')}>
+					{
+						localeOptions().map(({ locale: code, label }) => (
+							<li>
+								<a
+									href={localeUrl(code, pagePaths[code] ?? '/')}
+									hreflang={locales[code].htmlLang}
+									aria-current={code === locale ? 'page' : undefined}
+								>
+									{label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
 			</nav>
 		</header>
 
@@ -33,7 +103,7 @@ const { title = "srcres's blog", description = 'A personal technical blog.' } = 
 		</main>
 
 		<footer>
-			<p>© {new Date().getFullYear()} srcres. Built with Astro.</p>
+			<p>© {new Date().getFullYear()} srcres. {t('footer.builtWith')}</p>
 		</footer>
 	</body>
 </html>
