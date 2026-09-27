@@ -1,8 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
 const title = "srcres's blog";
 const description = 'Personal notes on programming, systems, tools, and the web.';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
 <Layout title={title} description={description}>
@@ -17,11 +22,19 @@ const description = 'Personal notes on programming, systems, tools, and the web.
 	<section aria-labelledby="recent-posts">
 		<h2 id="recent-posts">Recent posts</h2>
 		<div class="post-list">
-			<article class="post-preview">
-				<h3><a href="/">Hello, Astro</a></h3>
-				<time datetime="2026-09-26">2026-09-26</time>
-				<p>A first placeholder entry while the blog structure is taking shape.</p>
-			</article>
+			{
+				posts.map((post) => (
+					<article class="post-preview">
+						<h3>
+							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+						</h3>
+						<time datetime={post.data.pubDate.toISOString()}>
+							{post.data.pubDate.toLocaleDateString()}
+						</time>
+						<p>{post.data.description}</p>
+					</article>
+				))
+			}
 		</div>
 	</section>
 </Layout>
