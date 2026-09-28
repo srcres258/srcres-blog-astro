@@ -2,12 +2,15 @@
   Minimal blog styling inspired by Bear Blog's default CSS.
   https://github.com/HermanMartinus/bearblog/blob/master/templates/styles/blog/default.css
 */
+/* @font-face declarations live in ./fonts.css, imported by src/layouts/Layout.astro. */
 
 :root {
 	color-scheme: dark;
 	--width: 720px;
-	--font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	--font-main: "Cascadia Mono", "LXGW WenKai", system-ui, -apple-system, BlinkMacSystemFont,
+		"Segoe UI", sans-serif;
+	--font-mono: "Cascadia Mono", "LXGW WenKai", ui-monospace, SFMono-Regular, Menlo, Monaco,
+		Consolas, "Liberation Mono", monospace;
 	--background-color: #01242e;
 	--heading-color: #eee;
 	--text-color: #ddd;
