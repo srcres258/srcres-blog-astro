@@ -9,7 +9,7 @@ import type { Locale } from './config';
 const zhCN = {
 	'site.description': '关于编程、系统、工具与 Web 的个人笔记。',
 	'site.lede':
-		'关于编程、系统、工具与 Web 的个人笔记。这个站点刻意保持朴素：以文字为主、静态页面、速度快，样式只用一个受 Bear Blog 启发的小型 CSS 层。',
+		'有善始者实繁，能克终者盖寡。',
 	'nav.main': '主导航',
 	'nav.home': '首页',
 	'nav.language': '语言',
@@ -22,7 +22,7 @@ export type UIKey = keyof typeof zhCN;
 const en = {
 	'site.description': 'Personal notes on programming, systems, tools, and the web.',
 	'site.lede':
-		'Personal notes on programming, systems, tools, and the web. This site is intentionally plain: mostly text, fast static pages, and a small CSS layer inspired by Bear Blog.',
+		'Do one thing and do it well.',
 	'nav.main': 'Main navigation',
 	'nav.home': 'Home',
 	'nav.language': 'Language',
