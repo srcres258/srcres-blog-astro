@@ -9,10 +9,7 @@ tags: ["hello", "world"]
 
 来自 Astro 博客的问候，样式基于 Bear Blog 的 CSS。
 
-## 第一章
+尝试新的 self-hosted blog site ，框架来自 Astro。
 
-foo
+本 blog 始于 2026/9/27 。一切重新出发，找到自己新的技术点。
 
-## 第二章
-
-bar
