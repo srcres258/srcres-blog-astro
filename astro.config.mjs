@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	// Uncomment and set your deployed origin to emit absolute canonical and
 	// hreflang URLs (also required by the @astrojs/sitemap integration).
-	// site: 'https://example.com',
+	site: 'https://blog.srcres258.top',
 	i18n: {
 		locales: ['zh-cn', 'en'],
 		defaultLocale: 'zh-cn',
