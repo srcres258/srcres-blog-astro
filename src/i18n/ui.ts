@@ -14,7 +14,7 @@ const zhCN = {
 	'nav.home': '首页',
 	'nav.language': '语言',
 	'home.recentPosts': '最新文章',
-	'footer.builtWith': '使用 Astro 构建。',
+	'footer.builtWith': '',
 } as const;
 
 export type UIKey = keyof typeof zhCN;
@@ -27,7 +27,7 @@ const en = {
 	'nav.home': 'Home',
 	'nav.language': 'Language',
 	'home.recentPosts': 'Recent posts',
-	'footer.builtWith': 'Built with Astro.',
+	'footer.builtWith': '',
 } as const satisfies Record<UIKey, string>;
 
 export const ui = {
