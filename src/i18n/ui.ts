@@ -14,7 +14,7 @@ const zhCN = {
 	'nav.home': '首页',
 	'nav.language': '语言',
 	'home.recentPosts': '最新文章',
-	'footer.builtWith': '',
+	'footer.license': '使用 CC-BY-4.0 授权。',
 } as const;
 
 export type UIKey = keyof typeof zhCN;
@@ -27,7 +27,7 @@ const en = {
 	'nav.home': 'Home',
 	'nav.language': 'Language',
 	'home.recentPosts': 'Recent posts',
-	'footer.builtWith': '',
+	'footer.license': 'Licensed under CC-BY-4.0.',
 } as const satisfies Record<UIKey, string>;
 
 export const ui = {
